@@ -18,5 +18,5 @@
 #!   Insert documentation for your function here
 DeclareGlobalFunction( "FindCounterexample" );
 DeclareGlobalFunction( "CountCounterexamples" );
-DeclareGlobalFunction( "MinimumCounterexample" );
-DeclareGlobalFunction( "MaximumCounterexample" );
+DeclareGlobalFunction( "MinimumExample" );
+DeclareGlobalFunction( "MaximumExample" );

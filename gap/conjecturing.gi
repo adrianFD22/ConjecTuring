@@ -6,7 +6,7 @@
 
 InstallGlobalFunction( FindCounterexample, function(n, generator, condition, args, more...)
   local i, rem,
-  update_ratio, batch, bar, progressBar, #Progress bar
+  update_ratio, batch, use_bar, progressBar, #Progress bar
   use_loop_index,
   compute_batch, res_batch;
 
@@ -16,7 +16,7 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
   
   # Optional parameters
   use_loop_index := Length(more) >= 1 and more[1];
-  bar := Length(more) >= 2 and more[2];
+  use_bar := Length(more) >= 2 and more[2];
 
   # Prepare batch length
   update_ratio := 100;
@@ -53,12 +53,12 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
   Print("  ________________________________\n\n");
 
   # Progress bar
-  if bar then progressBar := ProgressBar(); fi;
+  if use_bar then progressBar := ProgressBar(); fi;
 
   # Test
   for i in [0..update_ratio-1] do
     # Progress bar
-    if bar then UpdateProgressBar(progressBar, i/update_ratio); fi;
+    if use_bar then UpdateProgressBar(progressBar, i/update_ratio); fi;
 
     # Compute batch
     res_batch := compute_batch(i*batch+1, (i+1)*batch);
@@ -67,7 +67,7 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
     if res_batch <> true then 
 
       # Progress bar
-      if bar then EndProgressBar(progressBar); fi;
+      if use_bar then EndProgressBar(progressBar); fi;
 
       # Display result
       Print("\n");
@@ -83,7 +83,7 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
   if res_batch <> true then 
 
     # Progress bar
-    if bar then EndProgressBar(progressBar); fi;
+    if use_bar then EndProgressBar(progressBar); fi;
 
     # Display result
     Print("\n");
@@ -94,7 +94,7 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
   fi;
 
   # Progress bar
-  if bar then EndProgressBar(progressBar); fi;
+  if use_bar then EndProgressBar(progressBar); fi;
 
   # Display result
   Print("\n");
@@ -106,7 +106,7 @@ end);
 
 InstallGlobalFunction( CountCounterexamples, function(n, generator, condition, args, more...)
   local i, rem, count,
-  update_ratio, batch, bar, progressBar, #Progress bar
+  update_ratio, batch, use_bar, progressBar, #Progress bar
   use_loop_index,
   compute_batch, res_batch;
 
@@ -116,7 +116,7 @@ InstallGlobalFunction( CountCounterexamples, function(n, generator, condition, a
   
   # Optional parameters
   use_loop_index := Length(more) >= 1 and more[1];
-  bar := Length(more) >= 2 and more[2];
+  use_bar := Length(more) >= 2 and more[2];
 
 
   # Prepare batch length
@@ -156,13 +156,13 @@ InstallGlobalFunction( CountCounterexamples, function(n, generator, condition, a
   Print("  ________________________________\n\n");
 
   # Progress bar
-  if bar then progressBar := ProgressBar(); fi;
+  if use_bar then progressBar := ProgressBar(); fi;
 
 
   # Test
   for i in [0..update_ratio-1] do
     # Progress bar
-    if bar then UpdateProgressBar(progressBar, i/update_ratio); fi;
+    if use_bar then UpdateProgressBar(progressBar, i/update_ratio); fi;
 
     # Compute batch
     compute_batch(i*batch+1, (i+1)*batch);
@@ -172,7 +172,7 @@ InstallGlobalFunction( CountCounterexamples, function(n, generator, condition, a
   compute_batch(update_ratio*batch+1, n);
 
   # Progress bar
-  if bar then EndProgressBar(progressBar); fi;
+  if use_bar then EndProgressBar(progressBar); fi;
 
   # Display result
   Print("\n");
@@ -182,9 +182,9 @@ InstallGlobalFunction( CountCounterexamples, function(n, generator, condition, a
 end);
 
 
-InstallGlobalFunction( MinimumCounterexample, function(n, generator, enumerator, args, more...)
+InstallGlobalFunction( MinimumExample, function(n, generator, enumerator, args, more...)
   local i, rem, counterexample_min, counterexample_obj, 
-  update_ratio, batch, bar, progressBar, #Progress bar
+  update_ratio, batch, use_bar, progressBar, #Progress bar
   use_loop_index,
   compute_batch, res_batch;
 
@@ -194,7 +194,7 @@ InstallGlobalFunction( MinimumCounterexample, function(n, generator, enumerator,
   
   # Optional parameters
   use_loop_index := Length(more) >= 1 and more[1];
-  bar := Length(more) >= 2 and more[2];
+  use_bar := Length(more) >= 2 and more[2];
 
 
   # Prepare batch length
@@ -237,13 +237,13 @@ InstallGlobalFunction( MinimumCounterexample, function(n, generator, enumerator,
   Print("  ________________________________\n\n");
 
   # Progress bar
-  if bar then progressBar := ProgressBar(); fi;
+  if use_bar then progressBar := ProgressBar(); fi;
 
 
   # Test
   for i in [0..update_ratio-1] do
     # Progress bar
-    if bar then UpdateProgressBar(progressBar, i/update_ratio); fi;
+    if use_bar then UpdateProgressBar(progressBar, i/update_ratio); fi;
 
     # Compute batch
     compute_batch(i*batch+1, (i+1)*batch);
@@ -253,7 +253,7 @@ InstallGlobalFunction( MinimumCounterexample, function(n, generator, enumerator,
   compute_batch(update_ratio*batch+1, n);
 
   # Progress bar
-  if bar then EndProgressBar(progressBar); fi;
+  if use_bar then EndProgressBar(progressBar); fi;
 
   # Display result
   Print("\n");
@@ -264,9 +264,9 @@ InstallGlobalFunction( MinimumCounterexample, function(n, generator, enumerator,
 end);
 
 
-InstallGlobalFunction( MaximumCounterexample, function(n, generator, enumerator, args, more...)
+InstallGlobalFunction( MaximumExample, function(n, generator, enumerator, args, more...)
   local i, rem, counterexample_max, counterexample_obj, 
-  update_ratio, batch, bar, progressBar, #Progress bar
+  update_ratio, batch, use_bar, progressBar, #Progress bar
   use_loop_index,
   compute_batch, res_batch;
 
@@ -276,7 +276,7 @@ InstallGlobalFunction( MaximumCounterexample, function(n, generator, enumerator,
   
   # Optional parameters
   use_loop_index := Length(more) >= 1 and more[1];
-  bar := Length(more) >= 2 and more[2];
+  use_bar := Length(more) >= 2 and more[2];
 
 
   # Prepare batch length
@@ -319,13 +319,13 @@ InstallGlobalFunction( MaximumCounterexample, function(n, generator, enumerator,
   Print("  ________________________________\n\n");
 
   # Progress bar
-  if bar then progressBar := ProgressBar(); fi;
+  if use_bar then progressBar := ProgressBar(); fi;
 
 
   # Test
   for i in [0..update_ratio-1] do
     # Progress bar
-    if bar then UpdateProgressBar(progressBar, i/update_ratio); fi;
+    if use_bar then UpdateProgressBar(progressBar, i/update_ratio); fi;
 
     # Compute batch
     compute_batch(i*batch+1, (i+1)*batch);
@@ -335,7 +335,7 @@ InstallGlobalFunction( MaximumCounterexample, function(n, generator, enumerator,
   compute_batch(update_ratio*batch+1, n);
 
   # Progress bar
-  if bar then EndProgressBar(progressBar); fi;
+  if use_bar then EndProgressBar(progressBar); fi;
 
   # Display result
   Print("\n");
