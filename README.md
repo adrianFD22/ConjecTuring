@@ -30,7 +30,7 @@ The parameter **condition** is replaced by **enumerator** in the function **Mini
 
 ## Usage tips
 
-- Create GAP files to store your generator functions. Maybe you have multiple conjectures over the same group of objects (conjectures over finite groups, conjectures over rational numbers...) and it will help you to reuse your code and not writing a generator each time.
+- Create GAP files to store your generator functions. Maybe you have multiple conjectures over the same set of objects (conjectures over finite groups, conjectures over rational numbers...) and it will help you to reuse your code and not writing a generator each time.
 
 - Create templates to perform conjecture testing. Check out the ones in the *examples* folder.
 
