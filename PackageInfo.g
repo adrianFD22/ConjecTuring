@@ -13,6 +13,7 @@ Subtitle := "Rudimentary functions to help to check conjectures.",
 Version := "0.1",
 Date := "09/02/2023", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
+BannerString := "",
 
 Persons := [
   rec(

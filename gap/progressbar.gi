@@ -1,45 +1,48 @@
 
 
-
+# Init progress bar
 InstallGlobalFunction( ProgressBar, function(more...)
-  local progbar, i;
+    local progbar, i;
 
   # Attributes
-  progbar := rec(current := 0, symbol := "█", length := 50);
-  if Length(more) <> 0 then progbar.length := more[1]; fi;
+    progbar := rec(current := 0, symbol := "█", length := 50);
+    if Length(more) <> 0 then progbar.length := more[1]; fi;
 
   # Print the heading
-  Print("  Progress: |\c");
-  for i in [1..progbar.length] do
-    Print("-\c");
-  od;
-  Print("|  0% Complete\c");
-  return progbar;
+    Print("            ");
+    for i in [1..progbar.length] do
+        Print("_");
+    od;
+    Print("\n  Progress: ");
+    Print("\c");
+    return progbar;
 end);
 
-
+# Update progress bar
 InstallGlobalFunction( UpdateProgressBar, function(progbar, per)
-  local i, show_per;
+    local i,
+    current_length, new_length, diff_length;
 
-  progbar.current := per;
+    # Get the current length and the new length
+    current_length := Int(progbar.length * progbar.current);
+    new_length := Int(progbar.length * per);
 
-  # Update bar
-  Print("\r\c"); #Relocate cursor
-  Print("  Progress: |\c");
-  for i in [1..Int(progbar.current*progbar.length)] do Print(progbar.symbol,"\c"); od;
-  for i in [1..progbar.length-Int(progbar.current*progbar.length)] do Print("-\c"); od;
-  Print("| \c");
+    # Get the difference
+    diff_length := new_length - current_length;
 
-  # Update percentaje
-  if Int(progbar.current*100) < 10 then Print(" \c"); fi;
-  show_per := Int(progbar.current*100);
-  Print(show_per, "\% Complete\c");
+    # Update the bar
+    for i in [1..diff_length] do
+        Print(progbar.symbol);
+    od;
 
-  return;
+    Print("\c");
+    progbar.current := per;
+
+    return;
 end);
 
-
+# End progress bar
 InstallGlobalFunction( EndProgressBar, function(progbar)
-  UpdateProgressBar(progbar, 1);
-  Print("\n");
+    UpdateProgressBar(progbar, 1);
+    Print("\n");
 end);
