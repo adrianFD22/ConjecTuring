@@ -16,7 +16,7 @@ The paradigm is the following one. Imagine you want to test a conjecture represe
 ## How to use
 
 Let **FuncExample** be one of the four functions above to perform conjecture testing. This is the heading of the function and its parameters:
-``` 
+```
 FuncExample(n, generator, condition, args, use_index_loop, use_bar);
 ```
 - **n**: number of tests to execute, i.e, number of iterations to loop.
@@ -33,6 +33,8 @@ The parameter **condition** is replaced by **enumerator** in the function **Mini
 - Create GAP files to store your generator functions. Maybe you have multiple conjectures over the same set of objects (conjectures over finite groups, conjectures over rational numbers...) and it will help you to reuse your code and not writing a generator each time.
 
 - Create templates to perform conjecture testing. Check out the ones in the *examples* folder.
+
+- If the execution of any of this functions is stopped, you can access to the current iteration index during the break loop through the `current_iteration` variable.
 
 ## Contact
 

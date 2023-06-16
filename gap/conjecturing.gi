@@ -13,7 +13,7 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
   #----------------------------------------
   #             Prepare variables
   #----------------------------------------
-  
+
   # Optional parameters
   use_loop_index := Length(more) >= 1 and more[1];
   use_bar := Length(more) >= 2 and more[2];
@@ -25,11 +25,11 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
 
   # Local function: compute each batch of conjecture testing
   compute_batch := function(index_start, index_stop)
-    local act_args, act, j;
+    local act_args, act, current_test;
 
-    for j in [index_start..index_stop] do
+    for current_test in [index_start..index_stop] do
       act_args := ShallowCopy(args);
-      if use_loop_index then Add(act_args, j, 1); fi; #Use loop index
+      if use_loop_index then Add(act_args, current_test, 1); fi; #Use loop index
       act := CallFuncList(generator, act_args);
 
       if not condition(act) then
@@ -43,7 +43,7 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
   #----------------------------------------
   #                  Main
   #----------------------------------------
-  
+
   # Display header
   Print("  ________________________________\n");
   Print("  Finding counterexample ", n, " times \n");
@@ -64,7 +64,7 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
     res_batch := compute_batch(i*batch+1, (i+1)*batch);
 
     # Check if counterexample was found
-    if res_batch <> true then 
+    if res_batch <> true then
 
       # Progress bar
       if use_bar then EndProgressBar(progressBar); fi;
@@ -80,7 +80,7 @@ InstallGlobalFunction( FindCounterexample, function(n, generator, condition, arg
 
   # Remainder of tests
   res_batch := compute_batch(update_ratio*batch+1, n);
-  if res_batch <> true then 
+  if res_batch <> true then
 
     # Progress bar
     if use_bar then EndProgressBar(progressBar); fi;
@@ -113,7 +113,7 @@ InstallGlobalFunction( CountCounterexamples, function(n, generator, condition, a
   #----------------------------------------
   #             Prepare variables
   #----------------------------------------
-  
+
   # Optional parameters
   use_loop_index := Length(more) >= 1 and more[1];
   use_bar := Length(more) >= 2 and more[2];
@@ -123,18 +123,18 @@ InstallGlobalFunction( CountCounterexamples, function(n, generator, condition, a
   update_ratio := 100;
   batch := QuoInt(n, update_ratio);
   rem := n mod update_ratio;
-  
+
 
   # Prepare variable for counterexample counting
   count := 0;
 
   # Local function: compute each batch of conjecture testing
   compute_batch := function(index_start, index_stop)
-    local act_args, act, j;
+    local act_args, act, current_test;
 
-    for j in [index_start..index_stop] do
+    for current_test in [index_start..index_stop] do
       act_args := ShallowCopy(args);
-      if use_loop_index then Add(act_args, j, 1); fi; #Use loop index
+      if use_loop_index then Add(act_args, current_test, 1); fi; #Use loop index
       act := CallFuncList(generator, act_args);
 
       if not condition(act) then
@@ -146,7 +146,7 @@ InstallGlobalFunction( CountCounterexamples, function(n, generator, condition, a
   #----------------------------------------
   #                  Main
   #----------------------------------------
-  
+
   # Display header
   Print("  ________________________________\n");
   Print("  Counting counterexamples ", n, " times \n");
@@ -183,7 +183,7 @@ end);
 
 
 InstallGlobalFunction( MinimumExample, function(n, generator, enumerator, args, more...)
-  local i, rem, counterexample_min, counterexample_obj, 
+  local i, rem, counterexample_min, counterexample_obj,
   update_ratio, batch, use_bar, progressBar, #Progress bar
   use_loop_index,
   compute_batch, res_batch;
@@ -191,7 +191,7 @@ InstallGlobalFunction( MinimumExample, function(n, generator, enumerator, args, 
   #----------------------------------------
   #             Prepare variables
   #----------------------------------------
-  
+
   # Optional parameters
   use_loop_index := Length(more) >= 1 and more[1];
   use_bar := Length(more) >= 2 and more[2];
@@ -201,20 +201,20 @@ InstallGlobalFunction( MinimumExample, function(n, generator, enumerator, args, 
   update_ratio := 100;
   batch := QuoInt(n, update_ratio);
   rem := n mod update_ratio;
-  
+
 
   # Prepare variable for finding the minimum
   counterexample_min := infinity;
 
   # Local function: compute each batch of conjecture testing
   compute_batch := function(index_start, index_stop)
-    local act_args, act, j, act_num;
+    local act_args, act, current_test, act_num;
 
-    for j in [index_start..index_stop] do
+    for current_test in [index_start..index_stop] do
       act_args := ShallowCopy(args);
-      if use_loop_index then Add(act_args, j, 1); fi; #Use loop index
+      if use_loop_index then Add(act_args, current_test, 1); fi; #Use loop index
       act := CallFuncList(generator, act_args);
-      
+
       act_num := enumerator(act);
 
       if act_num < counterexample_min then
@@ -227,7 +227,7 @@ InstallGlobalFunction( MinimumExample, function(n, generator, enumerator, args, 
   #----------------------------------------
   #                  Main
   #----------------------------------------
-  
+
   # Display header
   Print("  ________________________________\n");
   Print("  Finding the minimum ", n, " times \n");
@@ -265,7 +265,7 @@ end);
 
 
 InstallGlobalFunction( MaximumExample, function(n, generator, enumerator, args, more...)
-  local i, rem, counterexample_max, counterexample_obj, 
+  local i, rem, counterexample_max, counterexample_obj,
   update_ratio, batch, use_bar, progressBar, #Progress bar
   use_loop_index,
   compute_batch, res_batch;
@@ -273,7 +273,7 @@ InstallGlobalFunction( MaximumExample, function(n, generator, enumerator, args, 
   #----------------------------------------
   #             Prepare variables
   #----------------------------------------
-  
+
   # Optional parameters
   use_loop_index := Length(more) >= 1 and more[1];
   use_bar := Length(more) >= 2 and more[2];
@@ -283,20 +283,20 @@ InstallGlobalFunction( MaximumExample, function(n, generator, enumerator, args, 
   update_ratio := 100;
   batch := QuoInt(n, update_ratio);
   rem := n mod update_ratio;
-  
+
 
   # Prepare variable for finding the minimum
   counterexample_max := -infinity;
 
   # Local function: compute each batch of conjecture testing
   compute_batch := function(index_start, index_stop)
-    local act_args, act, j, act_num;
+    local act_args, act, current_test, act_num;
 
-    for j in [index_start..index_stop] do
+    for current_test in [index_start..index_stop] do
       act_args := ShallowCopy(args);
-      if use_loop_index then Add(act_args, j, 1); fi; #Use loop index
+      if use_loop_index then Add(act_args, current_test, 1); fi; #Use loop index
       act := CallFuncList(generator, act_args);
-      
+
       act_num := enumerator(act);
 
       if act_num > counterexample_max then
@@ -309,7 +309,7 @@ InstallGlobalFunction( MaximumExample, function(n, generator, enumerator, args, 
   #----------------------------------------
   #                  Main
   #----------------------------------------
-  
+
   # Display header
   Print("  ________________________________\n");
   Print("  Finding the maximum ", n, " times \n");
