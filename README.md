@@ -36,6 +36,10 @@ The parameter **condition** is replaced by **enumerator** in the function **Mini
 
 - If the execution of any of this functions is stopped, you can access to the current iteration index during the break loop through the `current_iteration` variable.
 
+## TODO
+
+- ProgressBar is broken sometimes
+
 ## Contact
 
 I'm Adrián Fidalgo-Díaz. If you have any suggestions or whatever, feel free to contact me at adrianfd22399@gmail.com.
