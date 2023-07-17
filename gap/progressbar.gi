@@ -17,28 +17,27 @@ InstallGlobalFunction( ProgressBar, function()
   return progbar;
 end);
 
-# Update progress bar
+# Update progressbar
 InstallGlobalFunction( UpdateProgressBar, function(progbar, per)
-    local i,
-    current_length, new_length, diff_length;
+  local i, show_per;
 
-    # Get the current length and the new length
-    current_length := Int(progbar.length * progbar.current);
-    new_length := Int(progbar.length * per);
+  progbar.current := per;
 
-    # Get the difference
-    diff_length := new_length - current_length;
+  # Update bar
+  Print("\r\c"); #Relocate cursor
+  Print("  Progress: |\c");
+  for i in [1..Int(progbar.current*progbar.length)] do Print(progbar.symbol,"\c"); od;
+  for i in [1..progbar.length-Int(progbar.current*progbar.length)] do Print("-\c"); od;
+  Print("| \c");
 
-    # Update the bar
-    for i in [1..diff_length] do
-        Print(progbar.symbol);
-    od;
+  # Update percentaje
+  if Int(progbar.current*100) < 10 then Print(" \c"); fi;
+  show_per := Int(progbar.current*100);
+  Print(show_per, "\% Complete\c");
 
-    Print("\c");
-    progbar.current := per;
-
-    return;
+  return;
 end);
+
 
 # End progress bar
 InstallGlobalFunction( EndProgressBar, function(progbar)
