@@ -1,19 +1,19 @@
 
 
 
-InstallGlobalFunction( ProgressBar, function(more...)
+InstallGlobalFunction( ProgressBar, function()
   local progbar, i;
 
   # Attributes
   progbar := rec(current := 0, symbol := "█", length := 50);
-  if Length(more) <> 0 then progbar.length := more[1]; fi;
+  progbar.length := Maximum(10, SizeScreen()[1] - 30);
 
   # Print the heading
-  Print("  Progress: |\c");
+  Print("  Progress: |");
   for i in [1..progbar.length] do
-    Print("-\c");
+    Print("-");
   od;
-  Print("|  0% Complete\c");
+  Print("|  0% Complete");
   return progbar;
 end);
 
@@ -42,4 +42,26 @@ end);
 InstallGlobalFunction( EndProgressBar, function(progbar)
   UpdateProgressBar(progbar, 1);
   Print("\n");
+end);
+
+
+InstallGlobalFunction(TestProgressBar, function()
+    local progbar, i,
+    length, step,
+    duration_sec, delay_micro_sec;
+
+    length := 10;
+    duration_sec := 5;
+
+    step := Float(1 / length);
+    delay_micro_sec := QuoInt(duration_sec * 1000000, length);
+
+    progbar := ProgressBar();
+
+    for i in [1..length-1] do
+        UpdateProgressBar(progbar, i * step);
+        MicroSleep(delay_micro_sec);
+    od;
+
+    EndProgressBar(progbar);
 end);
