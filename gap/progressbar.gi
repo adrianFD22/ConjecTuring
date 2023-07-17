@@ -18,6 +18,7 @@ InstallGlobalFunction( ProgressBar, function()
 end);
 
 
+# Update progressbar
 InstallGlobalFunction( UpdateProgressBar, function(progbar, per)
   local i, show_per;
 
