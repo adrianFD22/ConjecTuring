@@ -13,6 +13,13 @@ The four of them proceed very similiarly. They get a conjecture to test and iter
 
 The paradigm is the following one. Imagine you want to test a conjecture represented by a GAP function called **condition**. This function must receive an arbitrary object (a number, a group, a ring...) as a parameter for which to test the conjecture and will return true or false depending if this object satisfies or not the conjecture. The objects for which to test the conjecture will be given by another GAP function called **generator**. This one will generate objects based on its arguments.
 
+## Installation
+
+Clone the repository in the ```pkg``` directory of your GAP installation.
+```
+git clone https://github.com/adrianFD22/ConjecTuring.git
+```
+
 ## How to use
 
 Let **FuncExample** be one of the four functions above to perform conjecture testing. This is the heading of the function and its parameters:
@@ -35,11 +42,3 @@ The parameter **condition** is replaced by **enumerator** in the function **Mini
 - Create templates to perform conjecture testing. Check out the ones in the *examples* folder.
 
 - If the execution of any of this functions is stopped, you can access to the current iteration index during the break loop through the `current_iteration` variable.
-
-## TODO
-
-- ProgressBar is broken sometimes
-
-## Contact
-
-I'm Adrián Fidalgo-Díaz. If you have any suggestions or whatever, feel free to contact me at adrianfd22399@gmail.com.
